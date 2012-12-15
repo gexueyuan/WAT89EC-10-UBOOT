@@ -118,7 +118,7 @@ ulong get_MPLL_CLK(void)
 
 int print_cpuinfo(void)
 {
-	printf("\nCPU:     S5P6440@%dMHz\n", get_ARMCLK()/1000000);
+	printf("\nCPU:     S5P6450@%dMHz\n", get_ARMCLK()/1000000);
 	printf("         Fclk = %dMHz, Hclk = %dMHz, Pclk = %dMHz",
 			get_FCLK()/1000000, get_HCLK()/1000000, get_PCLK()/1000000);
 

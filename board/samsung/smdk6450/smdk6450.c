@@ -134,7 +134,8 @@ int board_late_init (void)
 #ifdef CONFIG_DISPLAY_BOARDINFO
 int checkboard(void)
 {
-	printf("Board:   SMDK6450\n");
+//	printf("Board:   SMDK6450\n");
+	printf("Board:   WAT89EC-10\n");    
 	return (0);
 }
 #endif
