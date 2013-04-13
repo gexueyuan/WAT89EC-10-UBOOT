@@ -88,15 +88,15 @@ void setup_hsmmc_clock(void)
 	tmp = CLK_SRC0_REG & ~(0x3<<20);
 	CLK_SRC0_REG = tmp | (0x1<<20);
 	
-#ifdef CONFIG_EMMC_4_4
-	CLK_SRC0_REG = CLK_SRC0_REG & ~(7<<6) | (0x1 << 6);
-#endif
+//#ifdef CONFIG_EMMC_4_4
+//	CLK_SRC0_REG = CLK_SRC0_REG & ~(7<<6) | (0x1 << 6);
+//#endif
 
 	/* MMC1 clock div */
 	tmp = CLK_DIV1_REG & ~(0xf<<4);
-#ifdef CONFIG_EMMC_4_4
-	tmp &= ~(0xf<<28);
-#endif
+//#ifdef CONFIG_EMMC_4_4
+//	tmp &= ~(0xf<<28);
+//#endif
 	clock = get_MPLL_CLK() / (((CLK_DIV0_REG >> 4) & 1) + 1) / 1000000;
 	for(i=0; i<0xf; i++)
 	{
@@ -115,21 +115,38 @@ void setup_hsmmc_clock(void)
 #endif
 
 #ifdef USE_MMC2
+    printf("envi e\n");
+	printf("SDMMC_CHANNEL2\n");    
 	/* MMC2 clock src = SCLKMPLL */
 	tmp = CLK_SRC0_REG & ~(0x3<<22);
 	CLK_SRC0_REG = tmp | (0x1<<22);
 
+
+#ifdef CONFIG_EMMC_4_4
+	CLK_SRC0_REG = CLK_SRC0_REG & ~(7<<6) | (0x1 << 6);
+#endif
+    
 	/* MMC2 clock div */
 	tmp = CLK_DIV1_REG & ~(0xf<<8);
-	clock = get_MPLL_CLK()/1000000;
+#ifdef CONFIG_EMMC_4_4
+	tmp &= ~(0xf<<28);
+#endif    
+//	clock = get_MPLL_CLK()/1000000;
+    clock = get_MPLL_CLK() / (((CLK_DIV0_REG >> 4) & 1) + 1) / 1000000;  
 	for(i=0; i<0xf; i++)
 	{
-		//if((clock / (i+1)) <= 50) {
-		if((clock / (i+1)) <= 21) {
+		if((clock / (i+1)) <= 50) {
+            //	if((clock / (i+1)) <= 21) {
 			CLK_DIV1_REG = tmp | i<<8;
+#ifdef CONFIG_EMMC_4_4
+			CLK_DIV1_REG |= i<<28;
+#endif            
 			break;
 		}
 	}
+            printf("MPLL_CON_REG: %X \n", MPLL_CON_REG);
+            printf("CLK_DIV0_REG: %X \n", CLK_DIV0_REG);
+            printf("CLK_DIV1_REG: %X \n", CLK_DIV1_REG);            
 #endif
 }
 
@@ -192,6 +209,7 @@ void setup_hsmmc0_cfg_gpio(void)
 
 #endif
 #ifdef USE_MMC2
+     printf("GPIO_MMC2\n");
 	/* 7 pins will be assigned - GPG0[0:6] = CLK, CMD, DAT[0:3], CDn */
 	reg = readl(GPCCON) & 0xff00ffff;
 	writel(reg | 0x00330000, GPCCON);

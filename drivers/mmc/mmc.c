@@ -1310,7 +1310,7 @@ int mmc_initialize(bd_t *bis)
 	}
 #endif
 //	mmc_boot_device = get_active_device();
-	mmc = find_mmc_device(1);
+	mmc = find_mmc_device(0);
 	if (mmc) {
 		err = mmc_init(mmc);
 		if (err) {

@@ -483,8 +483,9 @@
    Select a needed channel :
    It's recommanded to select only one channel to use 'movi' command
 */
-#define USE_MMC0
+//#define USE_MMC0
 #define USE_MMC1
+#define USE_MMC2
 
 
 #define MMC_MAX_CHANNEL		3
@@ -512,7 +513,7 @@
 #define CFG_FASTBOOT_SDMMCBSP
 
 #ifdef CFG_FASTBOOT_SDMMCBSP
-#define CFG_FASTBOOT_SDFUSE_MMCDEV      1
+#define CFG_FASTBOOT_SDFUSE_MMCDEV      2
 
 #else
 #define CFG_FASTBOOT_SDFUSE_MMCDEV      1

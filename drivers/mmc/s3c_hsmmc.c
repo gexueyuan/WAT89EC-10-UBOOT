@@ -440,6 +440,7 @@ int smdk_s3c_hsmmc_init(void)
 
 #ifdef USE_MMC2
 	err = s3c_hsmmc_initialize(2);
+    printk("SD/MMC channel2 Initializing.\n");   
 	if(err)
 		return err;
 #endif	
